@@ -24,7 +24,7 @@ export default async function FilteredNotesPage({
   params: Promise<{ slug: string[] }>;
 }) {
   const { slug } = await params;
-  const currentTag = slug?.[0] ?? "all";
+  const currentTag = slug?.[0] === 'all' ? undefined : slug?.[0];
 
   const queryClient = new QueryClient();
 

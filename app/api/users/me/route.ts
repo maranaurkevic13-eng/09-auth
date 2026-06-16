@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function GET() {
   return NextResponse.json({
@@ -8,7 +9,7 @@ export async function GET() {
   });
 }
 
-export async function PATCH(req: Request) {
-  const body = await req.json();
+export async function PATCH(request: NextRequest) {
+  const body = await request.json();
   return NextResponse.json({ message: "Profile updated", user: body });
 }

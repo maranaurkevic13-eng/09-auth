@@ -44,3 +44,8 @@ export async function fetchNoteById(id: string) {
   const res = await clientApi.get(`/notes/${id}`);
   return res.data;
 }
+
+export async function deleteNote(id: string) {
+  const res = await clientApi.delete(`/notes/${id}`);
+  return res.data;
+}

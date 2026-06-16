@@ -1,18 +1,37 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { api } from "../../api";
+import { isAxiosError } from "axios";
 
 export async function GET(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  req: Request,
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await context.params;
-  return NextResponse.json({ id, title: "Note title", content: "Note content" });
+  try {
+    const { data } = await api.get(`/notes/${params.id}`);
+    return NextResponse.json(data);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error("Note GET error:", error.response?.data);
+      return NextResponse.json(error.response?.data, { status: error.response?.status || 500 });
+    }
+    console.error("Note GET unknown error:", error);
+    return NextResponse.json({ message: "Failed to fetch note" }, { status: 500 });
+  }
 }
 
 export async function DELETE(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  req: Request,
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await context.params;
-  return NextResponse.json({ message: `Note ${id} deleted` });
+  try {
+    const { data } = await api.delete(`/notes/${params.id}`);
+    return NextResponse.json(data);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error("Note DELETE error:", error.response?.data);
+      return NextResponse.json(error.response?.data, { status: error.response?.status || 500 });
+    }
+    console.error("Note DELETE unknown error:", error);
+    return NextResponse.json({ message: "Failed to delete note" }, { status: 500 });
+  }
 }

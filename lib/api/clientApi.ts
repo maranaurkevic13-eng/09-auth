@@ -1,51 +1,55 @@
-import axios from "axios";
+import { api } from "./api";
+import type { Note } from "@/types/note";
+import type { User } from "@/types/user";
 
-const clientApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL + "/api",
-  withCredentials: true,
-});
-
-export async function checkSession() {
-  const res = await clientApi.get("/auth/session");
+export async function fetchNotes(
+  page: number,
+  perPage: number = 10,
+  search?: string,
+  tag?: string
+): Promise<{ notes: Note[]; totalPages: number }> {
+  const res = await api.get("/notes", {
+    params: { page, perPage, search, tag },
+  });
   return res.data;
 }
 
-export async function getMe() {
-  const res = await clientApi.get("/users/me");
+export async function fetchNoteById(id: string): Promise<Note> {
+  const res = await api.get(`/notes/${id}`);
   return res.data;
 }
 
-export async function updateMe(data: { username?: string; avatar?: string }) {
-  const res = await clientApi.patch("/users/me", data);
+export async function createNote(values: Omit<Note, "id" | "createdAt" | "updatedAt">): Promise<Note> {
+  const res = await api.post("/notes", values);
   return res.data;
 }
 
-export async function register(data: { email: string; password: string }) {
-  const res = await clientApi.post("/auth/register", data);
+export async function deleteNote(id: string): Promise<Note> {
+  const res = await api.delete(`/notes/${id}`);
   return res.data;
 }
 
-export async function login(data: { email: string; password: string }) {
-  const res = await clientApi.post("/auth/login", data);
+export async function getMe(): Promise<User> {
+  const res = await api.get("/users/me");
   return res.data;
 }
 
-export async function logout() {
-  const res = await clientApi.post("/auth/logout");
+export async function updateMe(values: Partial<User>): Promise<User> {
+  const res = await api.patch("/users/me", values);
   return res.data;
 }
 
-export async function createNote(data: { title: string; content: string; tag?: string }) {
-  const res = await clientApi.post("/notes", data);
+export async function register(values: { email: string; password: string }): Promise<User> {
+  const res = await api.post("/auth/register", values);
   return res.data;
 }
 
-export async function fetchNoteById(id: string) {
-  const res = await clientApi.get(`/notes/${id}`);
+export async function login(values: { email: string; password: string }): Promise<User> {
+  const res = await api.post("/auth/login", values);
   return res.data;
 }
 
-export async function deleteNote(id: string) {
-  const res = await clientApi.delete(`/notes/${id}`);
+export async function logout(): Promise<{ message: string }> {
+  const res = await api.post("/auth/logout");
   return res.data;
 }

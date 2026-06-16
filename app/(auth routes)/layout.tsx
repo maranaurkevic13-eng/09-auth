@@ -1,10 +1,21 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
   return (
-    <section style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+    <section>
       {children}
     </section>
   );

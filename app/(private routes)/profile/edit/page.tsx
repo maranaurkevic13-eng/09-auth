@@ -1,58 +1,63 @@
 "use client";
+
+import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useAuthStore } from "@/lib/store/authStore";
 import { updateMe } from "@/lib/api/clientApi";
-import { useRouter } from "next/navigation";
-import css from './EditProfilePage.module.css';
-import Image from "next/image";
+import css from "./EditProfile.module.css";
 
 export default function EditProfilePage() {
   const { user, setUser } = useAuthStore();
   const router = useRouter();
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const username = form.get("username") as string;
+    const formData = new FormData(e.currentTarget);
+    const username = formData.get("username") as string;
 
     try {
-      const updated = await updateMe({ username });
-      setUser(updated);
+      const updatedUser = await updateMe({ username });
+      setUser(updatedUser);
       router.push("/profile");
-    } catch {
-      alert("Update failed");
+    } catch (error) {
+      console.error("Profile update failed:", error);
     }
-  }
+  };
 
   return (
     <main className={css.mainContent}>
-      <div className={css.profileCard}>
-        <h1 className={css.formTitle}>Edit Profile</h1>
-        <Image
-          src={user?.avatar || "/default-avatar.png"} 
-          alt="User Avatar"
-          width={120}
-          height={120}
-          className={css.avatar}
-        />
-        <form className={css.profileInfo} onSubmit={handleSubmit}>
-          <div className={css.usernameWrapper}>
-            <label htmlFor="username">Username:</label>
-            <input
-              id="username"
-              type="text"
-              className={css.input}
-              defaultValue={user?.username}
-            />
-          </div>
-          <p>Email: {user?.email}</p>
-          <div className={css.actions}>
-            <button type="submit" className={css.saveButton}>Save</button>
-            <button type="button" className={css.cancelButton} onClick={() => router.push("/profile")}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+      <h1 className={css.formTitle}>Edit Profile</h1>
+      <form onSubmit={handleSubmit} className={css.form}>
+        <div className={css.avatarWrapper}>
+          <Image
+            src={user?.avatar || "/default-avatar.png"}
+            alt="User Avatar"
+            width={120}
+            height={120}
+            className={css.avatar}
+          />
+        </div>
+        <label>
+          Email:
+          <input type="email" value={user?.email} readOnly />
+        </label>
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username" 
+            defaultValue={user?.username}
+            required
+          />
+        </label>
+        <div className={css.buttons}>
+          <button type="submit">Save</button>
+          <button type="button" onClick={() => router.push("/profile")}>
+            Cancel
+          </button>
+        </div>
+      </form>
     </main>
   );
 }

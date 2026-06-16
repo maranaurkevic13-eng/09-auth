@@ -29,3 +29,8 @@ export async function logout() {
   const res = await clientApi.post("/auth/logout");
   return res.data;
 }
+
+export async function updateMe(data: { username?: string; avatar?: string }) {
+  const res = await clientApi.patch("/users/me", data);
+  return res.data;
+}

@@ -1,4 +1,4 @@
-import { getMe } from "@/lib/api/serverApi";
+import { getMe } from "@/lib/api/api";
 import css from './ProfilePage.module.css';
 import Image from "next/image";
 

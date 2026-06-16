@@ -15,6 +15,11 @@ export async function getMe() {
   return res.data;
 }
 
+export async function updateMe(data: { username?: string; avatar?: string }) {
+  const res = await clientApi.patch("/users/me", data);
+  return res.data;
+}
+
 export async function register(data: { email: string; password: string }) {
   const res = await clientApi.post("/auth/register", data);
   return res.data;
@@ -30,7 +35,12 @@ export async function logout() {
   return res.data;
 }
 
-export async function updateMe(data: { username?: string; avatar?: string }) {
-  const res = await clientApi.patch("/users/me", data);
+export async function createNote(data: { title: string; content: string; tag?: string }) {
+  const res = await clientApi.post("/notes", data);
+  return res.data;
+}
+
+export async function fetchNoteById(id: string) {
+  const res = await clientApi.get(`/notes/${id}`);
   return res.data;
 }

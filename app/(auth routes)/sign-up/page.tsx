@@ -1,5 +1,5 @@
 "use client";
-import css from "./SignUp.module.css";
+import css from './SignUpPage.module.css';
 import { register } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

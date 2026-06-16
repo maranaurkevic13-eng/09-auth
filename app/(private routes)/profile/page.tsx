@@ -1,5 +1,5 @@
 import { getMe } from "@/lib/api/serverApi";
-import css from "./Profile.module.css";
+import css from './ProfilePage.module.css';
 import Image from "next/image";
 
 export default async function ProfilePage() {

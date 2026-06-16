@@ -1,4 +1,5 @@
-import { fetchNoteByIdServer } from "@/lib/api/serverApi"; 
+import { cookies } from "next/headers";
+import { fetchNoteByIdServer } from "@/lib/api/serverApi";
 import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import NoteDetailsClient from "./NoteDetails.client";
 import type { Metadata } from "next";
@@ -21,11 +22,12 @@ export default async function NotePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const cookieStore = cookies(); 
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteByIdServer(id),
+    queryFn: () => fetchNoteByIdServer(id, cookieStore.toString()), 
   });
 
   return (

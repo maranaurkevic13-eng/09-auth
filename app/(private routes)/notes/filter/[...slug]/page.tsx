@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { fetchNotesServer } from "@/lib/api/serverApi"; 
 import NoteList from "@/components/NoteList/NoteList";
 import type { Metadata } from "next";
@@ -24,8 +25,17 @@ export default async function FilteredNotesPage({
   const { slug } = await params;
   const currentTag = slug?.[0] ?? "all";
 
-  const { notes } = await fetchNotesServer(1, 10, undefined, currentTag);
+  const cookieStore = cookies(); 
+
+  const { notes } = await fetchNotesServer(
+    1,
+    10,
+    undefined,
+    currentTag,
+    cookieStore.toString() 
+  );
 
   return <NoteList notes={notes} />;
 }
+
 

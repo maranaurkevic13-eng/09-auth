@@ -34,12 +34,17 @@ export async function getMe(): Promise<User> {
   return res.data;
 }
 
-export async function checkSession(): Promise<{ accessToken: string; refreshToken: string }> {
+export async function checkSession(): Promise<unknown> {
   const res = await api.get("/auth/session");
   return res.data;
 }
 
-export async function updateMe(values: Partial<User>): Promise<User> {
+export type UpdateUserPayload = {
+  username?: string;
+  avatar?: string;
+};
+
+export async function updateMe(values: UpdateUserPayload): Promise<User> {
   const res = await api.patch("/users/me", values);
   return res.data;
 }

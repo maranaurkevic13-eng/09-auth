@@ -18,3 +18,13 @@ export async function fetchNoteById(id: string) {
   return res.json();
 }
 
+export async function createNote(data: { title: string; content: string; tag?: string }) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notes`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Failed to create note");
+  return res.json();
+}

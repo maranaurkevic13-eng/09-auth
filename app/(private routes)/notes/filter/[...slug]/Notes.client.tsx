@@ -11,19 +11,18 @@ import Link from "next/link";
 
 export default function NotesClient({ tag }: { tag?: string }) {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-
+  const [page, setPage] = useState(1);     
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setSearch(value);
-    setPage(1); 
+    setPage(1);
   }, 500);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", page, search, tag],
     queryFn: () => fetchNotes(page, 10, search, tag),
     placeholderData: keepPreviousData,
-  });    
+  });
 
   if (isLoading) return <p>Loading notes...</p>;
   if (isError) return <p>Error loading notes</p>;
@@ -38,7 +37,11 @@ export default function NotesClient({ tag }: { tag?: string }) {
         <Link href="/notes/action/create">Create Note</Link>
       </div>
 
-      <NoteList notes={notes} />
+      {notes.length > 0 ? (
+        <NoteList notes={notes} />
+      ) : (
+        <p>No notes found</p>
+      )}
 
       {notes.length > 0 && (
         <Pagination

@@ -35,8 +35,8 @@ export async function getMe(): Promise<User> {
 }
 
 export async function checkSession(): Promise<{ accessToken: string; refreshToken: string }> {
-  const { data } = await api.get("/auth/session");
-  return data;
+  const res = await api.get("/auth/session");
+  return res.data;
 }
 
 export async function updateMe(values: Partial<User>): Promise<User> {

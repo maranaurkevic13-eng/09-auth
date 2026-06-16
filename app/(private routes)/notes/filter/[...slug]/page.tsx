@@ -1,4 +1,4 @@
-import { fetchNotesServer } from "@/lib/api/serverApi";   
+import { fetchNotesServer } from "@/lib/api/serverApi";
 import NoteList from "@/components/NoteList/NoteList";
 import type { Metadata } from "next";
 
@@ -17,13 +17,14 @@ export async function generateMetadata({
 }
 
 export default async function FilteredNotesPage({
+  params,
 }: {
   params: Promise<{ slug: string[] }>;
-}) {   
+}) {
+  const { slug } = await params;
+  const currentTag = slug?.[0] ?? "all";
 
-  const { notes } = await fetchNotesServer();
+  const { notes } = await fetchNotesServer(currentTag);
 
   return <NoteList notes={notes} />;
-}
-
-
+}    

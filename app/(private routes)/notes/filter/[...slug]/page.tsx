@@ -1,5 +1,4 @@
-import { cookies } from "next/headers";
-import { fetchNotesServer } from "@/lib/api/serverApi"; 
+import { fetchNotesServer } from "@/lib/api/serverApi";   
 import NoteList from "@/components/NoteList/NoteList";
 import type { Metadata } from "next";
 
@@ -18,22 +17,11 @@ export async function generateMetadata({
 }
 
 export default async function FilteredNotesPage({
-  params,
 }: {
   params: Promise<{ slug: string[] }>;
-}) {
-  const { slug } = await params;
-  const currentTag = slug?.[0] ?? "all";
+}) {   
 
-  const cookieStore = cookies(); 
-
-  const { notes } = await fetchNotesServer(
-    1,
-    10,
-    undefined,
-    currentTag,
-    cookieStore.toString() 
-  );
+  const { notes } = await fetchNotesServer();
 
   return <NoteList notes={notes} />;
 }

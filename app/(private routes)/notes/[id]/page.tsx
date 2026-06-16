@@ -21,13 +21,12 @@ export default async function NotePage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const cookieStore = cookies(); 
+  const { id } = await params;     
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteByIdServer(id, cookieStore.toString()), 
+    queryFn: () => fetchNoteByIdServer(id), 
   });
 
   return (

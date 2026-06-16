@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { checkSession, getMe } from "@/lib/api/api";
+import { getMe, checkSessionServer } from "@/lib/api/serverApi";
 import { useAuthStore } from "@/lib/store/authStore";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -10,7 +10,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     async function verify() {
       try {
-        const session = await checkSession();
+        const session = await checkSessionServer();
         if (session) {
           const user = await getMe();
           setUser(user);

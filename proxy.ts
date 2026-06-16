@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { checkSession } from "@/lib/api/serverApi";
+import { checkSessionServer } from "@/lib/api/serverApi";
 
 const privateRoutes = ["/profile", "/notes"];
 const publicRoutes = ["/sign-in", "/sign-up"];
@@ -12,7 +12,7 @@ export async function proxy(req: NextRequest) {
 
   if (!accessToken && refreshToken) {
     try {
-      const session = await checkSession();
+      const session = await checkSessionServer();
       if (session?.accessToken && session?.refreshToken) {
         const res = NextResponse.next();
         res.cookies.set("accessToken", session.accessToken);

@@ -5,4 +5,4 @@ export default function NotesFilteredPage({ params }: { params: { slug: string[]
       <p>Slug: {params.slug.join("/")}</p>
     </main>
   );
-}
+}   

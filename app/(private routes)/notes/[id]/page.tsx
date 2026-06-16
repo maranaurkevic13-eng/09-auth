@@ -1,5 +1,4 @@
-import { cookies } from "next/headers";
-import { fetchNoteByIdServer } from "@/lib/api/serverApi";
+import { fetchNoteByIdServer } from "@/lib/api/serverApi";    
 import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import NoteDetailsClient from "./NoteDetails.client";
 import type { Metadata } from "next";

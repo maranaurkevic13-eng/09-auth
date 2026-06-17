@@ -1,4 +1,4 @@
-import css from './LayoutFilter.module.css'
+import css from './LayoutNotes.module.css'
 
 export default function NotesFilterLayout({
   children,

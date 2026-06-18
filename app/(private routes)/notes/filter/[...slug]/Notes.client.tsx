@@ -8,6 +8,7 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import Link from "next/link";
+import css from './NotesPage.module.css'
 
 
 export default function NotesClient({ tag }: { tag?: string }) {
@@ -43,11 +44,9 @@ export default function NotesClient({ tag }: { tag?: string }) {
       )}
 
       <Link href="/notes/action/create">
-        <button>Create note +</button>
+        <button className={css.button}>Create note +</button>
       </Link>
-
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Error loading notes</p>}
+    
       {notes.length > 0 ? (
         <NoteList notes={notes} />
       ) : (

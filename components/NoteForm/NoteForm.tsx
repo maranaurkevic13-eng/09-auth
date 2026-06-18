@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "@/lib/api/clientApi"; 
 import { useDraftStore } from "@/lib/store/noteStore";
 import type { Note } from "@/types/note";
+import css from './NoteForm.module.css'
 
 export default function NoteForm() {
   const router = useRouter();
@@ -31,8 +32,8 @@ export default function NoteForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <form className={css.form} onSubmit={handleSubmit}>
+      <input className={css.input}
         type="text"
         name="title"
         value={draft.title}
@@ -41,7 +42,7 @@ export default function NoteForm() {
         }
         required
       />
-      <textarea
+      <textarea className={css.textarea}
         name="content"
         value={draft.content}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -49,21 +50,21 @@ export default function NoteForm() {
         }
         required
       />
-      <select
+      <select className={css.select}
   name="tag"
   value={draft.tag}
   onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
     setDraft({ ...draft, tag: e.target.value as NoteTag })
   }
 >
-  <option value="Work">Work</option>
-  <option value="Todo">Todo</option>
-  <option value="Personal">Personal</option>
-  <option value="Meeting">Meeting</option>
-  <option value="Shopping">Shopping</option>
+  <option className={css.actions} value="Work">Work</option>
+  <option className={css.actions} value="Todo">Todo</option>
+  <option className={css.actions} value="Personal">Personal</option>
+  <option className={css.actions} value="Meeting">Meeting</option>
+  <option className={css.actions} value="Shopping">Shopping</option>
 </select>
-      <button type="submit">Save</button>
-      <button type="button" onClick={() => router.back()}>
+      <button className={css.submitButton} type="submit">Save</button>
+      <button className={css.cancelButton} type="button" onClick={() => router.back()}>
         Cancel
       </button>
     </form>

@@ -23,7 +23,12 @@ export default function AuthNavigation() {
     <>
       {isAuthenticated ? (
         <>
-          <li>{user?.email || user?.username}</li>
+          {/* ✅ Посилання на профіль */}
+          <li>
+            <Link href="/profile">
+              {user?.username || user?.email || "Profile"}
+            </Link>
+          </li>
           <li>
             <button onClick={handleLogout}>Logout</button>
           </li>

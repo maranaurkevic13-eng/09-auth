@@ -4,6 +4,7 @@ import { fetchNoteById } from "@/lib/api/clientApi";
 import { Note } from "@/types/note";
 import Modal from "@/components/Modal/Modal";
 import { useRouter } from "next/navigation";
+import css from './NotePreview.module.css'
 
 export default function NotePreview({ id }: { id: string }) {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function NotePreview({ id }: { id: string }) {
           <span>Tag: {data.tag}</span>
           <span>Created: {new Date(data.createdAt).toLocaleString()}</span>
         </div>
-        <button onClick={handleClose}>Close</button>
+        <button className={css.backBtn} onClick={handleClose}>Close</button>
       </div>
     </Modal>
   );

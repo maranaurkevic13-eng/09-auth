@@ -1,14 +1,15 @@
-"use client";
+import css from './CreateNote.module.css'
+import NoteForm from "@/components/NoteForm/NoteForm";
 
-export default function CreateNotePage() {
+
+export default function CreateNote() {
   return (
-    <main>
-      <h1>Create Note</h1>
-      <form>
-        <input type="text" name="title" placeholder="Title" />
-        <textarea name="content" placeholder="Content"></textarea>
-        <button type="submit">Save</button>
-      </form>
+    <main className={css.main}>
+      <div className={css.container}>
+        <h1 className={css.title}>Create note</h1>
+        <NoteForm />
+      </div>
     </main>
   );
 }
+

@@ -9,6 +9,7 @@ import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import Link from "next/link";
 
+
 export default function NotesClient({ tag }: { tag?: string }) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);     
@@ -28,28 +29,31 @@ export default function NotesClient({ tag }: { tag?: string }) {
   if (isError) return <p>Error loading notes</p>;
 
   const notes = data?.notes ?? [];
-  const totalPages = data?.totalPages ?? 1;
-
+ 
   return (
-    <main>
-      <div className="notes-header">
-        <SearchBox value={search} onSearch={debouncedSearch} />
-        <Link href="/notes/action/create">Create Note</Link>
-      </div>
+    <div>
+      <SearchBox value={search} onSearch={debouncedSearch} />
+  
+      {data && data.totalPages > 1 && (
+        <Pagination
+          pageCount={data.totalPages}
+          currentPage={page}
+          onPageChange={(selected) => setPage(selected)}
+        />
+      )}
 
+      <Link href="/notes/action/create">
+        <button>Create note +</button>
+      </Link>
+
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Error loading notes</p>}
       {notes.length > 0 ? (
         <NoteList notes={notes} />
       ) : (
         <p>No notes found</p>
       )}
-
-      {notes.length > 0 && (
-        <Pagination
-          currentPage={page}
-          pageCount={totalPages}
-          onPageChange={setPage}
-        />
-      )}
-    </main>
+  
+    </div>
   );
 }

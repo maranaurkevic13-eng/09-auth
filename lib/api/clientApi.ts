@@ -20,7 +20,7 @@ export async function fetchNoteById(id: string): Promise<Note> {
 }
 
 export async function createNote(values: Omit<Note, "id" | "createdAt" | "updatedAt">): Promise<Note> {
-  const res = await api.post("/notes", values);
+  const res = await api.post("/notes", values,);
   return res.data;
 }
 

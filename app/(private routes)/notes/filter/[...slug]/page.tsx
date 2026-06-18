@@ -14,8 +14,21 @@ export async function generateMetadata({
 
   return {
     title: `Notes filtered by ${currentTag} | NoteHub`,
-    description: `Browse notes tagged with ${currentTag}`,
-  };
+    description: `Browse notes filtered by ${currentTag} tag in NoteHub.`,
+    openGraph: {
+      title: `Notes filtered by ${currentTag} | NoteHub`,
+      description: `Browse notes filtered by ${currentTag} tag in NoteHub.`,
+      url: `https://notehub.com/notes/filter/${currentTag}`,
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          width: 1200,
+          height: 630,
+          alt: "NoteHub filter preview",
+        },
+      ],
+    },
+  }
 }
 
 export default async function FilteredNotesPage({

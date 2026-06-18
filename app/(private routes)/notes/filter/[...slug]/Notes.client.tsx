@@ -34,6 +34,9 @@ export default function NotesClient({ tag }: { tag?: string }) {
   return (
     <div>
       <SearchBox value={search} onSearch={debouncedSearch} />
+      <Link href="/notes/action/create">
+        <button className={css.button}>Create note +</button>
+      </Link>
   
       {data && data.totalPages > 1 && (
         <Pagination
@@ -42,11 +45,6 @@ export default function NotesClient({ tag }: { tag?: string }) {
           onPageChange={(selected) => setPage(selected)}
         />
       )}
-
-      <Link href="/notes/action/create">
-        <button className={css.button}>Create note +</button>
-      </Link>
-    
       {notes.length > 0 ? (
         <NoteList notes={notes} />
       ) : (
